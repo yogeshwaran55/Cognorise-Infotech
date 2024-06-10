@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculator</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+    }
+    .calculator {
+        width: 300px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 2px solid #ccc;
+        border-radius: 10px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .calculator .screen {
+        width: 100%;
+        height: 40px;
+        margin-bottom: 10px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 18px;
+        text-align: right;
+    }
+    .calculator .buttons {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 5px;
+    }
+    .calculator .button {
+        width: 100%;
+        height: 50px;
+        border: none;
+        border-radius: 5px;
+        font-size: 20px;
+        cursor: pointer;
+        background-color: #eee;
+        transition: background-color 0.3s ease;
+    }
+    .calculator .button:hover {
+        background-color: #ddd;
+    }
+    .buttons{
+        background-color: black;
+    }
+</style>
+</head>
+<body>
+
+<div class="calculator">
+    <div class="screen" id="screen"></div>
+    <div class="buttons">
+        <button class="button" onclick="appendNumber('7')">7</button>
+        <button class="button" onclick="appendNumber('8')">8</button>
+        <button class="button" onclick="appendNumber('9')">9</button>
+        <button class="button" onclick="setOperator('+')">+</button>
+        <button class="button" onclick="appendNumber('4')">4</button>
+        <button class="button" onclick="appendNumber('5')">5</button>
+        <button class="button" onclick="appendNumber('6')">6</button>
+        <button class="button" onclick="setOperator('-')">-</button>
+        <button class="button" onclick="appendNumber('1')">1</button>
+        <button class="button" onclick="appendNumber('2')">2</button>
+        <button class="button" onclick="appendNumber('3')">3</button>
+        <button class="button" onclick="setOperator('*')">*</button>
+        <button class="button" onclick="appendNumber('0')">0</button>
+        <button class="button" onclick="appendNumber('.')">.</button>
+        <button class="button" onclick="clearScreen()">C</button>
+        <button class="button" onclick="calculate()">=</button>
+        <button class="button" onclick="setOperator('/')">/</button>
+    </div>
+</div>
+
+<script>
+    let screen = document.getElementById('screen');
+    let currentNumber = '';
+    let operator = '';
+
+    function appendNumber(number) {
+        currentNumber += number;
+        screen.textContent = currentNumber;
+    }
+
+    function setOperator(op) {
+        operator = op;
+        currentNumber += ' ' + op + ' ';
+        screen.textContent = currentNumber;
+    }
+
+    function clearScreen() {
+        currentNumber = '';
+        operator = '';
+        screen.textContent = '';
+    }
+
+    function calculate() {
+        if (operator !== '') {
+            let expression = currentNumber.split(' ');
+            let num1 = parseFloat(expression[0]);
+            let op = expression[1];
+            let num2 = parseFloat(expression[2]);
+
+            let result;
+            switch (op) {
+                case '+':
+                    result = num1 + num2;
+                    break;
+                case '-':
+                    result = num1 - num2;
+                    break;
+                case '*':
+                    result = num1 * num2;
+                    break;
+                case '/':
+                    if (num2 !== 0) {
+                        result = num1 / num2;
+                    } else {
+                        result = 'Error';
+                    }
+                    break;
+                default:
+                    result = 'Error';
+            }
+
+            screen.textContent = result;
+            currentNumber = result.toString();
+            operator = '';
+        }
+    }
+</script>
+
+</body>
+</html>
