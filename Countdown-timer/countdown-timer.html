@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Countdown Timer</title>
+<style>
+  #timer {
+    font-size: 36px;
+    text-align: center;
+    margin-top: 50px;
+  }
+  #controls {
+    text-align: center;
+    margin-top: 20px;    
+  }
+  body {
+  font-family: Arial, sans-serif; /* Set a default font family */
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+}
+
+#timer {
+  font-size: 36px;
+  text-align: center;
+  margin-top: 50px;
+}
+
+#controls {
+  text-align: center;
+  margin-top: 20px;
+  margin-top: 5px;
+}
+
+button {
+  font-size: 16px; /* Adjust button font size */
+  padding: 10px 20px; /* Add padding to buttons */
+  margin: 0 5px; /* Add margin between buttons */
+}
+</style>
+</head>
+<body>
+
+<div id="timer">00:00:00</div>
+<div id="controls">
+  <button onclick="startTimer()">Start</button>
+  <button onclick="pauseTimer()">Pause</button>
+  <button onclick="resumeTimer()">Resume</button>
+  <button onclick="stopTimer()">Stop</button>
+</div>
+
+<script>
+  let timer;
+  let time = 0;
+  let isPaused = false;
+
+  function startTimer() {
+    if (!timer) {
+      timer = setInterval(updateTimer, 1000);
+    }
+  }
+
+  function updateTimer() {
+    if (!isPaused) {
+      time++;
+      const hours = Math.floor(time / 3600);
+      const minutes = Math.floor((time % 3600) / 60);
+      const seconds = time % 60;
+      document.getElementById("timer").innerText = formatTime(hours) + ":" + formatTime(minutes) + ":" + formatTime(seconds);
+    }
+  }
+
+  function formatTime(time) {
+    return time < 10 ? "0" + time : time;
+  }
+
+  function pauseTimer() {
+    isPaused = true;
+  }
+
+  function resumeTimer() {
+    isPaused = false;
+  }
+
+  function stopTimer() {
+    clearInterval(timer);
+    timer = null;
+    time = 0;
+    document.getElementById("timer").innerText = "00:00:00";
+    isPaused = false;
+  }
+</script>
+
+</body>
+</html>
